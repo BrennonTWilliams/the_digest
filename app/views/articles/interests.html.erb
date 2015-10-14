@@ -1,0 +1,61 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Articles Matching Your Interests</h1>
+    <% if @articles.length == 0 %>
+    <br>
+    <h5> Hmm, looks like there aren't any matches. Try
+    <%= link_to 'Adding More Tags In Your Profile', edit_user_path(current_user) %> </h5>
+    <% end %>
+    <% @articles.each do |article| %>
+        <strong>Title</strong>
+        <br>
+        <%= article.title %>
+        <br>
+        <strong>Author</strong>
+        <br>
+        <%= article.author %>
+        <br>
+        <strong>pubDate</strong>
+        <br>
+        <%= article.pubDate %>
+        <br>
+        <strong>Summary</strong>
+        <br>
+        <%= article.summary %>
+        <% if article.image and article.image != '' %>
+        <br>
+        <strong>Image</strong>
+        <br>
+          <%= article.image %>
+        <%end%>
+        <br>
+        <strong>Source</strong>
+        <br>
+        <%= article.source %>
+        <br>
+        <strong>Link</strong>
+        <br>
+        <%= article.link %>
+        <% if article.section %>
+        <br>
+        <strong>Section</strong>
+        <br>
+          <%= article.section %>
+        <%end%>
+        <br>
+        <% if article.tag_list %>
+        <strong>Tags</strong>
+        <br>
+          <% for tag in article.tag_list %>
+          <%=tag%>
+          <%if tag != article.tag_list[-1]%>
+          , 
+          <% end %>
+          <%end%>
+        <%end%>
+        <br>
+        <strong><%= link_to 'Show', article %></strong>
+        <br>
+        <br>
+    <% end %>
+<br>
