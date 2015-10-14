@@ -31,14 +31,13 @@ class Article < ActiveRecord::Base
 
 	def generate_indico_keywords()
 		Indico.api_key = API_KEY
-		puts 'Indico keywords:'
-		ind_keywords = Indico.keywords article1
-		ind_keywords.each { |k, v| puts "#{k} #{v}" }
-		puts
-		puts 'Indico tags:'
-		ind_tags = Indico.text_tags article1
-		ind_tags_sorted = ind_tags.sort_by { |_k, v| -1.0 * v }.first(10).to_h
-		ind_tags_sorted.each { |k, v| puts "#{k} #{v}" }
+		#ind_keywords = Indico.keywords self.summary
+		if self.source == "The Guardian" # Doesn't provide summaries
+			ind_tags = Indico.text_tags self.title
+		else
+			ind_tags = Indico.text_tags self.summary
+		end
+		add_tags_from_array(ind_tags)
 	end
 
 	def find_concepts_entities()
