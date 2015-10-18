@@ -32,6 +32,9 @@ gem 'acts-as-taggable-on'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
 
+# Use the Mandrill gem for sending emails to Users
+gem 'mandrill-api', '~> 1.0.53'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'
