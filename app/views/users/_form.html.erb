@@ -56,6 +56,11 @@
         <%= f.label :interest_list %><br>
         <%= f.text_field :interest_list, class: 'form-control' %>
       </div>
+      
+      <div class="form-group">
+        <%= f.label :subscribed, 'Tick this box if you want us to email you news digests with articles that match your interests' %><br>
+        <%= f.check_box :subscribed, class: 'form-control' %>
+      </div>
 
 
       <div class="form-group">
