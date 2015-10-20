@@ -50,7 +50,7 @@ class AdminController < ApplicationController
         :to => [
             {
               :email => subscriber.email,
-              :name => '#{subscriber.firstname} #{subscriber.lastname}'
+              :name => "#{subscriber.first_name} #{subscriber.last_name}"
               
             }
           ],
