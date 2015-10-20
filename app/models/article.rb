@@ -9,6 +9,7 @@ class Article < ActiveRecord::Base
 		generate_title_section_tags()
 		find_concepts_entities()
 		#generate_indico_keywords()
+		AdvancedTaggingJob.perform_later guest
 		self.save
 	end
 
