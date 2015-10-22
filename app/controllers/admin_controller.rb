@@ -25,6 +25,9 @@ class AdminController < ApplicationController
       sent_articles = subscriber.articles.to_a
       articles = articles - sent_articles
       
+      # Sort the articles to show the most recent first
+      articles.sort_by! {|a| a.pubDate }.reverse!
+      
       
       if articles.count == 0
             
