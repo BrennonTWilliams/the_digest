@@ -9,6 +9,9 @@ class Scraper
 		scrape_herald_sun(start_date, end_date)
 		scrape_new_yorker(start_date, end_date)
 		scrape_sbs(start_date, end_date)
+		# Once the articles are added with basic tagging, begin advanced
+		# tagging in the background
+		AdvancedTaggingJob.perform_later self
 	end
 
 	def scrape_sbs(start_date, end_date)

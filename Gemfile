@@ -31,6 +31,8 @@ gem 'acts-as-taggable-on'
 
 gem 'alchemy-api-rb', :require => 'alchemy_api'
 
+gem 'indico'
+
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug'

@@ -1,4 +1,6 @@
 require 'alchemy_api'
+require 'indico'
+
 class Article < ActiveRecord::Base
 	acts_as_taggable
 	ALC_API_KEY = '468a25b29d0a2637f083c0fa0b69d42997a139e3'
@@ -7,9 +9,10 @@ class Article < ActiveRecord::Base
 
 	def generate_tags()
 		generate_title_section_tags()
-		find_concepts_entities()
+		#find_concepts_entities()
 		#generate_indico_keywords()
-		AdvancedTaggingJob.perform_later guest
+		#self.save
+		#AdvancedTaggingJob.perform_later self
 		self.save
 	end
 
@@ -31,13 +34,17 @@ class Article < ActiveRecord::Base
 	end
 
 	def generate_indico_keywords()
-		Indico.api_key = API_KEY
+		Indico.api_key = IND_API_KEY
 		#ind_keywords = Indico.keywords self.summary
+		tags = []
 		if self.source == "The Guardian" # Doesn't provide summaries
 			ind_tags = Indico.text_tags self.title
 		else
 			ind_tags = Indico.text_tags self.summary
 		end
+
+		for element in ind_tags
+
 		add_tags_from_array(ind_tags)
 	end
 
@@ -48,7 +55,7 @@ class Article < ActiveRecord::Base
 		#a_entities = AlchemyAPI::EntityExtraction.new.search(text: self.summary)
 		#a_entities.each { |e| puts "#{e['type']} #{e['text']} #{e['relevance']}" }
 		if self.source == "The Guardian" # Doesn't provide summaries
-			a_concepts = AlchemyAPI::ConceptTagging.new.search(text: self.summary)
+			a_concepts = AlchemyAPI::ConceptTagging.new.search(text: self.title)
 		else
 			a_concepts = AlchemyAPI::ConceptTagging.new.search(text: self.summary)
 		end
