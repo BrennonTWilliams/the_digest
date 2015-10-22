@@ -20,14 +20,14 @@ class AdvancedTaggingJob < ActiveJob::Base
   end
 
   def generate_indico_keywords(article)
-		Indico.api_key = API_KEY
+		Indico.api_key = IND_API_KEY
 		#ind_keywords = Indico.keywords article.summary
 		if article.source == "The Guardian" # Doesn't provide summaries
 			ind_tags = Indico.text_tags article.title
 		else
 			ind_tags = Indico.text_tags article.summary
 		end
-		add_tags_from_array(ind_tags)
+		add_tags_from_array(article, ind_tags)
 	end
 
 	def find_concepts_entities(article)
@@ -48,12 +48,12 @@ class AdvancedTaggingJob < ActiveJob::Base
 				tags << keyword['text']
 			end
 		end
-		add_tags_from_array(tags)
+		add_tags_from_array(article, tags)
 	end
 
-	def add_tags_from_array(tag_array)
+	def add_tags_from_array(article, tag_array)
 		for tag in tag_array
-			self.tag_list.add(tag)
+			article.tag_list.add(tag)
 		end
 	end
 end
