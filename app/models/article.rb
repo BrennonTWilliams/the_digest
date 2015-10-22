@@ -1,5 +1,6 @@
 class Article < ActiveRecord::Base
-	acts_as_taggable
+	has_and_belongs_to_many :users
+    acts_as_taggable
 
 	def search_weight query
 		weight = 0
