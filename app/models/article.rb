@@ -1,5 +1,6 @@
 class Article < ActiveRecord::Base
-	acts_as_taggable
+	has_and_belongs_to_many :users
+    acts_as_taggable
 
 	def generate_tags()
 		self.title = clean_title(title)
