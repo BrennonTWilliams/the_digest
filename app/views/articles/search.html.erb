@@ -1,13 +1,9 @@
 <p id="notice"><%= notice %></p>
 
-<h1>Articles Matching Your Interests</h1>
-    <% if @articles.length == 0 %>
-    <br>
-    <h5> Hmm, looks like there aren't any matches. Try
-    <%= link_to 'Adding More Tags In Your Profile', edit_user_path(current_user) %> </h5>
-    <% end %>
+<h1>Your Search Results:</h1>
+
     <% @articles.each do |article| %>
-         <div class="panel panel-default">
+        <div class="panel panel-default">
           <div class="panel-body">
             <h2><%= article.source%>:  <%= raw article.title%><h2> 
             <% unless article.tag_list.empty? %>
@@ -18,6 +14,5 @@
             </div>
           </div>
         </div>
-
     <% end %>
 <br>

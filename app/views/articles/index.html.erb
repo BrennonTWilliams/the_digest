@@ -3,55 +3,17 @@
 <h1>All Articles</h1>
 
     <% @articles.each do |article| %>
-        <strong>Title</strong>
-        <br>
-        <%= article.title %>
-        <br>
-        <strong>Author</strong>
-        <br>
-        <%= article.author %>
-        <br>
-        <strong>pubDate</strong>
-        <br>
-        <%= article.pubDate %>
-        <br>
-        <strong>Summary</strong>
-        <br>
-        <%= article.summary %>
-        <% if article.image %>
-        <br>
-        <strong>Image</strong>
-        <br>
-          <%= article.image %>
-        <%end%>
-        <br>
-        <strong>Source</strong>
-        <br>
-        <%= article.source %>
-        <br>
-        <strong>Link</strong>
-        <br>
-        <%= article.link %>
-        <% if article.section %>
-        <br>
-        <strong>Section</strong>
-        <br>
-          <%= article.section %>
-        <%end%>
-        <br>
-        <% if article.tag_list %>
-        <strong>Tags</strong>
-        <br>
-          <% for tag in article.tag_list %>
-          <%=tag%>
-          <%if tag != article.tag_list[-1]%>
-          , 
-          <% end %>
-          <%end%>
-        <%end%>
-        <br>
-        <strong><%= link_to 'Show', article %></strong>
-        <br>
-        <br>
+        <div class="panel panel-default">
+          <div class="panel-body">
+            <h2><%= article.source%>:  <%= raw article.title%><h2> 
+            <% unless article.tag_list.empty? %>
+              <p>Tagged: <%= article.tag_list.join(', ') %></p>
+            <% end %>
+            <div class="btn-group pull-right" role="group">
+              <%= link_to 'Show', article, class: "btn btn-default" %>
+            </div>
+          </div>
+        </div>
+    <% end %>
     <% end %>
 <br>

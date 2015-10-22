@@ -26,6 +26,10 @@ class ArticlesController < ApplicationController
     render 'interests'
   end
 
+  def search 
+    @articles = (Article.all.select {|article| (article.search_weight params[:query]) > 0}).sort_by {|article| (article.search_weight params[:query])}.reverse
+  end
+
   # POST /articles
   # POST /articles.json
   def create

@@ -1,6 +1,44 @@
 class Article < ActiveRecord::Base
 	acts_as_taggable
 
+	def search_weight query
+		weight = 0
+		query.split(/\s+/).each do |query_word|
+			if match_tag query_word
+				weight += 4
+			elsif contains title, query_word
+				weight += 3
+			elsif contains summary, query_word
+				weight += 2
+			elsif contains source, query_word
+				weight += 1
+			end
+		end
+		return weight
+	end
+
+	def match_tag query_word
+		self.tag_list.each do |tag|
+			words_in_tag =  tag.split(/\s+/)
+				words_in_tag.each do |word|
+				if word.downcase == query_word.downcase
+					return true
+				end
+			end
+		end
+		return false
+	end
+
+			
+	def contains str, query_word
+		clean_title(str).gsub(/\s+/, ' ').strip.split(' ').each do |word|
+			if word.downcase == query_word.downcase
+				return true
+			end
+		end
+		return false
+	end
+
 	def generate_tags()
 		self.title = clean_title(title)
 		if all_capitalized?(self.title)
