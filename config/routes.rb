@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   
   resources :users, only: [:create,:new,:update,:destroy,:edit]
   get '/interests', to: 'articles#my_interests', as: 'interests'
+  get '/search', to: 'articles#search', as: 'search'
 end
