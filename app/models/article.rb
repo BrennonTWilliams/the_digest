@@ -7,11 +7,14 @@ class Article < ActiveRecord::Base
 		query.split(/\s+/).each do |query_word|
 			if match_tag query_word
 				weight += 4
-			elsif contains title, query_word
+			end
+			if contains title, query_word
 				weight += 3
-			elsif contains summary, query_word
+			end
+			if contains summary, query_word
 				weight += 2
-			elsif contains source, query_word
+			end
+			if contains source, query_word
 				weight += 1
 			end
 		end
