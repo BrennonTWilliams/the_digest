@@ -4,6 +4,6 @@ class ScraperController < ApplicationController
 		s.run_scrape()
 		# Once the articles are added with basic tagging, begin advanced
 		# tagging in the background
-		AdvancedTaggingJob.perform_later nil
+		AdvancedTaggingJob.perform_later
 	end
 end
