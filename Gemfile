@@ -26,6 +26,9 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+#use will paginate to paginate articles
+gem 'will_paginate', '~> 3.0.6'
+
 # Use acts as taggable on
 gem 'acts-as-taggable-on'
 
