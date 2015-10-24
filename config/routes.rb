@@ -5,11 +5,8 @@ Rails.application.routes.draw do
   root 'sessions#home'
 
   get 'admin/scrape', to: 'scraper#scrape'
-<<<<<<< HEAD
-=======
   
   get 'admin/email'
->>>>>>> 376bb4b34d1c67dadf9f4aa80e0c7c16d639dff5
 
   # Sessions URL
   get 'sessions/home', to: 'sessions#home', as: :login
