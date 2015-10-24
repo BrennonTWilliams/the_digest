@@ -1,8 +1,12 @@
 class User < ActiveRecord::Base
-	# Validations
+	has_and_belongs_to_many :articles
+    
+    
+    # Validations
  	validates_presence_of :email, :first_name, :last_name, :username
   	validates :email, format: { with: /(.+)@(.+).[a-z]{2,4}/, message: "%{value} is not a valid email" }
   	validates :username, length: { minimum: 3 }
+  	validates :password, length: { minimum: 8 }
 
 	# Users can have interests
 	acts_as_taggable_on :interests

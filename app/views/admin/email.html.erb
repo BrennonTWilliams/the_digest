@@ -1,0 +1,14 @@
+This is the admin email page.
+
+<br>
+
+Emails were sent to <%= @sendings.count %> users.
+<br>
+
+
+<% @sendings.each do |sending| %>
+
+  <%= sending %>
+  <br>
+  
+<% end %>

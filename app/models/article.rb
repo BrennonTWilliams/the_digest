@@ -7,50 +7,8 @@ class Article < ActiveRecord::Base
 	IND_API_KEY = '98cc12f49a1bad14f1452d11151b99df'
 	MIN_RELEVANCE = 0.5
 
-	def search_weight query
-		weight = 0
-		query.split(/\s+/).each do |query_word|
-			if match_tag query_word
-				weight += 4
-			elsif contains title, query_word
-				weight += 3
-			elsif contains summary, query_word
-				weight += 2
-			elsif contains source, query_word
-				weight += 1
-			end
-		end
-		return weight
-	end
-
-	def match_tag query_word
-		self.tag_list.each do |tag|
-			words_in_tag =  tag.split(/\s+/)
-				words_in_tag.each do |word|
-				if word.downcase == query_word.downcase
-					return true
-				end
-			end
-		end
-		return false
-	end
-
-			
-	def contains str, query_word
-		clean_title(str).gsub(/\s+/, ' ').strip.split(' ').each do |word|
-			if word.downcase == query_word.downcase
-				return true
-			end
-		end
-		return false
-	end
-
 	def generate_tags()
 		generate_title_section_tags()
-		#find_concepts_entities()
-		#generate_indico_keywords()
-		#self.save
-		#AdvancedTaggingJob.perform_later self
 		self.save
 	end
 
@@ -70,42 +28,6 @@ class Article < ActiveRecord::Base
 			self.tag_list.add(self.section)
 		end
 	end
-
-	# def generate_indico_keywords()
-	# 	Indico.api_key = IND_API_KEY
-	# 	#ind_keywords = Indico.keywords self.summary
-	# 	tags = []
-	# 	if self.source == "The Guardian" # Doesn't provide summaries
-	# 		ind_tags = Indico.text_tags self.title
-	# 	else
-	# 		ind_tags = Indico.text_tags self.summary
-	# 	end
-
-	# 	for element in ind_tags
-	# 	add_tags_from_array(ind_tags)
-	# end
-	# end
-
-	# def find_concepts_entities()
-	# 	# Identifies and adds concept and entity tags
-	# 	AlchemyAPI.key = ALC_API_KEY
-	# 	tags = []
-	# 	#a_entities = AlchemyAPI::EntityExtraction.new.search(text: self.summary)
-	# 	#a_entities.each { |e| puts "#{e['type']} #{e['text']} #{e['relevance']}" }
-	# 	if self.source == "The Guardian" # Doesn't provide summaries
-	# 		a_concepts = AlchemyAPI::ConceptTagging.new.search(text: self.title)
-	# 	else
-	# 		a_concepts = AlchemyAPI::ConceptTagging.new.search(text: self.summary)
-	# 	end
-	# 	#a_concepts.each { |c| puts "#{c['text']} #{c['relevance']}" }
-	# 	keywords = a_concepts #+ a_entities
-	# 	for keyword in keywords
-	# 		if keyword['relevance'].to_f > MIN_RELEVANCE
-	# 			tags << keyword['text']
-	# 		end
-	# 	end
-	# 	add_tags_from_array(tags)
-	# end
 
 	def clean_title(title)
 		cleaned_title = ''

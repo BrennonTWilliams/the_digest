@@ -1,0 +1,10 @@
+class CreateUsersArticlesJoin < ActiveRecord::Migration
+  def change
+    create_table :articles_users, id: false do |t|
+      t.belongs_to :article, index: true
+      t.belongs_to :user, index: true
+    end
+  end
+    
+  
+end

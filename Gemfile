@@ -28,12 +28,23 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 # Use ActiveModel has_secure_password
 gem 'bcrypt', '~> 3.1.7'
 
+#use will paginate to paginate articles
+gem 'will_paginate', '~> 3.0.6'
+
 # Use acts as taggable on
 gem 'acts-as-taggable-on'
 
+<<<<<<< HEAD
 gem 'alchemy-api-rb', :require => 'alchemy_api'
 
 gem 'indico'
+=======
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
+# Use the Mandrill gem for sending emails to Users
+gem 'mandrill-api', '~> 1.0.53'
+>>>>>>> 376bb4b34d1c67dadf9f4aa80e0c7c16d639dff5
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
