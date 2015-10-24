@@ -4,7 +4,7 @@ class ArticlesController < ApplicationController
   # GET /articles
   # GET /articles.json
   def index
-    @articles = Article.all
+    @articles = Article.all.paginate(:page => params[:page], :per_page => 10)
   end
 
   # GET /articles/1
@@ -22,12 +22,14 @@ class ArticlesController < ApplicationController
   end
 
   def my_interests
-    @articles = Article.tagged_with(current_user.interest_list, :any => true).to_a
+    interests_arr = Article.tagged_with(current_user.interest_list, :any => true).paginate(:page => params[:page], :per_page => 10)
+    @articles = Article.where(id: interests_arr.map(&:id)).paginate(:page => params[:page], :per_page => 10)
     render 'interests'
   end
 
   def search 
-    @articles = (Article.all.select {|article| (article.search_weight params[:query]) > 0}).sort_by {|article| [(article.search_weight params[:query]), article.pubDate]}.reverse
+    search_arr = (Article.all.select {|article| (article.search_weight params[:query]) > 0}).sort_by {|article| (article.search_weight params[:query])}.reverse
+    @articles = Article.where(id: search_arr.map(&:id)).paginate(:page => params[:page], :per_page => 10)
   end
 
   # POST /articles
