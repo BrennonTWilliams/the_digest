@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   # Root is the home path
   root 'sessions#home'
 
-  get '/scraper', to: 'scraper#scrape'
+  get 'admin/scrape', to: 'scraper#scrape'
 
   # Sessions URL
   get 'sessions/home', to: 'sessions#home', as: :login

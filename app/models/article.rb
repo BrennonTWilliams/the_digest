@@ -1,5 +1,11 @@
+require 'alchemy_api'
+require 'indico'
+
 class Article < ActiveRecord::Base
 	acts_as_taggable
+	ALC_API_KEY = '468a25b29d0a2637f083c0fa0b69d42997a139e3'
+	IND_API_KEY = '98cc12f49a1bad14f1452d11151b99df'
+	MIN_RELEVANCE = 0.5
 
 	def search_weight query
 		weight = 0
@@ -40,6 +46,16 @@ class Article < ActiveRecord::Base
 	end
 
 	def generate_tags()
+		generate_title_section_tags()
+		#find_concepts_entities()
+		#generate_indico_keywords()
+		#self.save
+		#AdvancedTaggingJob.perform_later self
+		self.save
+	end
+
+	def generate_title_section_tags()
+		# Generates tags from the title and section
 		self.title = clean_title(title)
 		if all_capitalized?(self.title)
 			valid_tags = get_longest_words(self.title)
@@ -53,8 +69,43 @@ class Article < ActiveRecord::Base
 		if self.section
 			self.tag_list.add(self.section)
 		end
-		self.save
 	end
+
+	# def generate_indico_keywords()
+	# 	Indico.api_key = IND_API_KEY
+	# 	#ind_keywords = Indico.keywords self.summary
+	# 	tags = []
+	# 	if self.source == "The Guardian" # Doesn't provide summaries
+	# 		ind_tags = Indico.text_tags self.title
+	# 	else
+	# 		ind_tags = Indico.text_tags self.summary
+	# 	end
+
+	# 	for element in ind_tags
+	# 	add_tags_from_array(ind_tags)
+	# end
+	# end
+
+	# def find_concepts_entities()
+	# 	# Identifies and adds concept and entity tags
+	# 	AlchemyAPI.key = ALC_API_KEY
+	# 	tags = []
+	# 	#a_entities = AlchemyAPI::EntityExtraction.new.search(text: self.summary)
+	# 	#a_entities.each { |e| puts "#{e['type']} #{e['text']} #{e['relevance']}" }
+	# 	if self.source == "The Guardian" # Doesn't provide summaries
+	# 		a_concepts = AlchemyAPI::ConceptTagging.new.search(text: self.title)
+	# 	else
+	# 		a_concepts = AlchemyAPI::ConceptTagging.new.search(text: self.summary)
+	# 	end
+	# 	#a_concepts.each { |c| puts "#{c['text']} #{c['relevance']}" }
+	# 	keywords = a_concepts #+ a_entities
+	# 	for keyword in keywords
+	# 		if keyword['relevance'].to_f > MIN_RELEVANCE
+	# 			tags << keyword['text']
+	# 		end
+	# 	end
+	# 	add_tags_from_array(tags)
+	# end
 
 	def clean_title(title)
 		cleaned_title = ''
@@ -147,7 +198,7 @@ class Article < ActiveRecord::Base
 				'some', 'any', 'enough', 'all', 'both',
 				'other', 'another', 'such', 'what',
 				'rather', 'quite', 'and', 'but', 'or', 'nor',
-				'through', 'with', 'if', 'we', 'they']
+				'through', 'with', 'if', 'we', 'they', 'my', 'me']
 				determiners.include?(word.downcase)
 			else
 				false
