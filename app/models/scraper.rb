@@ -4,7 +4,7 @@ class Scraper
 	def run_scrape
 		start_date = ::Date.today - 7
 		#start_date = Article.order(created_at: :asc).first.created_at.to_date
-      	end_date = ::Date.today
+		end_date = ::Date.today
 		scrape_guardian(start_date, end_date)
 		scrape_herald_sun(start_date, end_date)
 		scrape_new_yorker(start_date, end_date)
