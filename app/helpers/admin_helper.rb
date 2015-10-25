@@ -37,7 +37,7 @@ module AdminHelper
     
     # Create a plaintext version of the message body
     plaintext_body = message_body.gsub(/<br>/, '\r\n')
-    plaintext_body.gsub!(/<a href='([^']+)>[^<]+<\/a>/, "See More - #{$1}")
+    plaintext_body.gsub!(/<a href='([^']+)'>[^<]+<\/a>/, 'See More - \1')
     plaintext_body.gsub!(/<strong>|<\/strong>/, '')
     
         
@@ -75,7 +75,7 @@ module AdminHelper
     text += "<br>#{article.title}"
     text += '<br><strong>Author</strong>'
     text += "<br>#{article.author}"
-    text += '<br><strong>PubDate</strong><br>'
+    text += '<br><strong>PubDate</strong>'
     text += "<br>#{article.pubDate}"
     # Link to the article's page, assuming it is being hosted
     # on http://localhost:3000
