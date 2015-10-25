@@ -34,7 +34,13 @@ module AdminHelper
       end
       
     end
-  
+    
+    # Create a plaintext version of the message body
+    plaintext_body = message_body.gsub(/<br>/, '\r\n')
+    plaintext_body.gsub!(/<a href='([^']+)>[^<]+<\/a>/, "See More - #{$1}")
+    plaintext_body.gsub!(/<strong>|<\/strong>/, '')
+    
+        
     # Send the message using the Madrill API.
     # Mandrill depends on a valid API key being set to the environment
     # variable MANDRILL_APIKEY. This is set in the file config/local_env.yml
@@ -45,7 +51,7 @@ module AdminHelper
     message = {
       :subject => 'Your news digest!',
       :from_name => 'The News Digest',
-      :text => 'This is an email send with Mandril!!',
+      :text => plaintext_body,
       :to => [
           {
             :email => subscriber.email,
@@ -69,7 +75,7 @@ module AdminHelper
     text += "<br>#{article.title}"
     text += '<br><strong>Author</strong>'
     text += "<br>#{article.author}"
-    text += '<br><strong>PubDate</strong></br>'
+    text += '<br><strong>PubDate</strong><br>'
     text += "<br>#{article.pubDate}"
     # Link to the article's page, assuming it is being hosted
     # on http://localhost:3000
