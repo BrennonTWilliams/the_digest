@@ -3,17 +3,12 @@ class AdminController < ApplicationController
   include AdminHelper
   require 'mandrill'
   
-
   def getSubscribedUsers
-  
     User.where(subscribed: true)
-  
   end
-
   
   # Email a news digest to all subscribed users
-  def email
-    
+  def email  
     @sendings = []
     subscribers = getSubscribedUsers
     subscribers.each do |subscriber|
@@ -22,9 +17,5 @@ class AdminController < ApplicationController
       @sendings << email_digest(subscriber)
       
     end
-  
   end
-  
-
-
 end
