@@ -1,6 +1,19 @@
-# README #
+# The Digest: SWEN30006 Project 3 #
+
+### Introduction ###
+
+The Digest is a news aggregator service that scrapes articles from several news outlets, generates tags for each article, and serves the articles to users with relevant interests both within the application and through email.
+
+This application is our Project 3 entry for Software Engineering 30006, The University of Melburne.
+
+### Team ###
+
+Brennon Williams, Washington and Lee University
+Nick Batchelder, Brown University
+Myles Gleeson, The University of Melbourne
 
 ### Usage ###
+
 1) Run:
 ```
 #!console
