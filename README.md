@@ -8,8 +8,12 @@ This application is our Project 3 entry for Software Engineering 30006, The Univ
 
 ### Team ###
 
+The Digest was developed by:
+
 Brennon Williams, Washington and Lee University
+
 Nick Batchelder, Brown University
+
 Myles Gleeson, The University of Melbourne
 
 ### Usage ###
